@@ -13,6 +13,12 @@ export default function App() {
         ]);
     };
 
+    const deleteGoalHandler = (id) => {
+        setCourseGoals((currentCourseGoals) =>
+            currentCourseGoals.filter((goal) => goal.id !== id)
+        );
+    };
+
     return (
         <View style={styles.appContainer}>
             {/* Goal 입력 영역 */}
@@ -23,7 +29,14 @@ export default function App() {
                 <FlatList
                     data={courseGoals}
                     renderItem={(itemData) => {
-                        return <GoalItem text={itemData.item.text} />;
+                        return (
+                            <GoalItem
+                                text={itemData.item.text}
+                                onDeleteFn={() =>
+                                    deleteGoalHandler(itemData.item.id)
+                                }
+                            />
+                        );
                     }}
                     keyExtractor={(item, index) => {
                         return item.id;
