@@ -1,24 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
+import { useState } from "react";
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ImageBackground } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import StartGameScreen from "./screens/StartGameScreen";
+import GameScreen from "./screens/GameScreen";
 
 export default function App() {
+    const [userNumber, setUserNumber] = useState(null);
+
+    const pickedNumberHandler = (pickedNumber) => {
+        setUserNumber(pickedNumber);
+    };
+
     return (
-        <LinearGradient
-            style={styles.rootScreen}
-            colors={["#4e0329", "#ddb52f"]}
-        >
-            <StatusBar style="auto" />
-            <ImageBackground
-                source={require("./assets/images/background.png")}
-                resizeMode="cover"
+        <SafeAreaProvider>
+            <LinearGradient
                 style={styles.rootScreen}
-                imageStyle={styles.backgroundImage}
+                colors={["#4e0329", "#ddb52f"]}
             >
-                <StartGameScreen />
-            </ImageBackground>
-        </LinearGradient>
+                <StatusBar style="auto" />
+                <ImageBackground
+                    source={require("./assets/images/background.png")}
+                    resizeMode="cover"
+                    style={styles.rootScreen}
+                    imageStyle={styles.backgroundImage}
+                >
+                    <SafeAreaView style={styles.rootScreen}>
+                        {userNumber ? (
+                            <GameScreen />
+                        ) : (
+                            <StartGameScreen
+                                onPickNumberFn={pickedNumberHandler}
+                            />
+                        )}
+                    </SafeAreaView>
+                </ImageBackground>
+            </LinearGradient>
+        </SafeAreaProvider>
     );
 }
 
