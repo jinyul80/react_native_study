@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 import NumberContainer from "../components/game/NumberContainer";
 import Title from "../components/Title";
 import PrimaryButton from "../components/PrimaryButton";
@@ -48,7 +50,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
         const newRndNumber = generateRandomBetween(
             minBoundary,
             maxBoundray,
-            currentGuess
+            currentGuess,
         );
 
         setCurrentGuess(newRndNumber);
@@ -67,14 +69,14 @@ const GameScreen = ({ userNumber, onGameOver }) => {
                         <PrimaryButton
                             onPressFn={nextGuessHandler.bind(this, "lower")}
                         >
-                            -
+                            <Ionicons name="remove" size={24} color="white" />
                         </PrimaryButton>
                     </View>
                     <View style={styles.button}>
                         <PrimaryButton
                             onPressFn={nextGuessHandler.bind(this, "greater")}
                         >
-                            +
+                            <Ionicons name="add" size={24} color="white" />
                         </PrimaryButton>
                     </View>
                 </View>
