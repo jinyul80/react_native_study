@@ -17,6 +17,7 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
     const [userNumber, setUserNumber] = useState(null);
     const [gameIsOver, setGameIsOver] = useState(true);
+    const [guessRounds, setGuessRounds] = useState(0);
 
     const [fontsLoaded] = useFonts({
         "OpenSans-Regular": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -38,8 +39,14 @@ export default function App() {
         setGameIsOver(false);
     };
 
-    const gameOverHandler = () => {
+    const gameOverHandler = (numberOfRounds) => {
         setGameIsOver(true);
+        setGuessRounds(numberOfRounds);
+    };
+
+    const startNewGameHandler = () => {
+        setUserNumber(null);
+        setGuessRounds(0);
     };
 
     let screen = <StartGameScreen onPickNumberFn={pickedNumberHandler} />;
@@ -53,7 +60,13 @@ export default function App() {
 
     if (gameIsOver && userNumber) {
         console.log("Game over 컴포넌트 표시");
-        screen = <GameOverScreen />;
+        screen = (
+            <GameOverScreen
+                roundsNumber={guessRounds}
+                userNumber={userNumber}
+                onStartNewGame={startNewGameHandler}
+            />
+        );
     }
 
     return (
