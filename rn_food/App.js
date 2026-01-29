@@ -1,16 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
 import CategoriesScreen from "./screens/CategoriesScreen";
 
 export default function App() {
-    return (
-        <View style={styles.container}>
-            <StatusBar style="auto" />
-            <CategoriesScreen />
-        </View>
-    );
+  return (
+      <SafeAreaProvider>
+          <StatusBar style="auto" />
+          <SafeAreaView style={styles.rootScreen}>
+              <CategoriesScreen />
+          </SafeAreaView>
+      </SafeAreaProvider>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {},
+    rootScreen: { flex: 1 },
 });
